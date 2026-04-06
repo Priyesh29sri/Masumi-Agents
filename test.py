@@ -1,4 +1,5 @@
 import asyncio
+import os
 import requests
 import time
 import json
@@ -11,7 +12,7 @@ from crawl4ai.content_scraping_strategy import LXMLWebScrapingStrategy
 # =========================
 # API CONFIG
 # =========================
-API_KEY = ""
+API_KEY = os.getenv("API_KEY", "")
 
 URL = "https://openrouter.ai/api/v1/chat/completions"
 

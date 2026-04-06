@@ -2,6 +2,7 @@ import asyncio
 import re
 import json
 import requests
+import os
 from urllib.parse import urlparse
 
 from crawl4ai import AsyncWebCrawler, BrowserConfig, CacheMode, CrawlerRunConfig
@@ -14,7 +15,7 @@ from crawl4ai.deep_crawling import (
 )
 
 # Your Together AI Key
-TOGETHER_API_KEY = "tgp_v1_ZaBghd8EuaRNO6gHiXLSsw5qLerUcVfyAnktQ6vGtOQ"
+TOGETHER_API_KEY = os.getenv("TOGETHER_API_KEY", "")
 TOGETHER_API_URL = "https://api.together.xyz/v1/chat/completions"
 
 # Basic Regex for explicit fallback extraction
