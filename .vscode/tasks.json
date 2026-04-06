@@ -1,0 +1,26 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "scan-person-emails",
+			"type": "shell",
+			"command": "/Users/priyeshsrivastava/WebScrapper/.venv-1/bin/python",
+			"args": [
+				"-u",
+				"-c",
+				"import asyncio,re; from test1 import run_crawl; urls=['https://wise.com','https://razorpay.com']; generic={'info','support','help','hello','contact','admin','sales','careers','career','jobs','privacy','legal','security','press','media','team','billing','finance','complaints','compliance','hr','marketing','partnerships','partners','noreply','no-reply','donotreply','investor','investors','feedback','office','enquiry','inquiries','query','queries','api'}; clean=lambda e: re.sub(r'^(u003e|gt|lt)+','',e.strip().lower(),flags=re.I); personal=lambda e: ((('.' in e.split('@',1)[0]) or ('_' in e.split('@',1)[0]) or ('-' in e.split('@',1)[0])) and e.split('@',1)[0] not in generic); async def m():\n  \n  for u in urls:\n    print(f'\\n=== {u} ===', flush=True)\n    em=sorted({clean(x) for x in await asyncio.wait_for(run_crawl(u),timeout=180) if '@' in x})\n    p=[e for e in em if personal(e)]\n    print('personal_like_count=',len(p), flush=True)\n    [print('PERSONAL:',e, flush=True) for e in p]\n    if not p: print('PERSONAL: none', flush=True)\nasyncio.run(m())"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "run-person-scan-file",
+			"type": "shell",
+			"command": "/Users/priyeshsrivastava/WebScrapper/.venv-1/bin/python",
+			"args": [
+				"-u",
+				"/Users/priyeshsrivastava/WebScrapper/person_scan.py"
+			],
+			"isBackground": false
+		}
+	]
+}
