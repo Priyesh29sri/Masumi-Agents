@@ -21,7 +21,7 @@ if sys.stdout.encoding.lower() != 'utf-8':
 # CONFIG
 # ─────────────────────────────────────────────
 
-OPENROUTER_API_KEY = "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"  # Replace with your key
+OPENROUTER_API_KEY = "API KEY"  # Replace with your key
 OPENROUTER_MODEL   = "mistralai/mistral-7b-instruct"  # Free/cheap model on OpenRouter
 
 MAX_SITES          = 8      # Max company sites from search results
