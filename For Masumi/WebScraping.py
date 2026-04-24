@@ -21,7 +21,7 @@ if sys.stdout.encoding.lower() != 'utf-8':
 # CONFIG
 # ─────────────────────────────────────────────
 
-OPENROUTER_API_KEY = "YOUR API KEY"  # Replace with your key
+OPENROUTER_API_KEY = "YOUR API KEY HERE"  # Replace with your key
 OPENROUTER_MODEL   = "mistralai/mistral-7b-instruct"  # Free/cheap model on OpenRouter
 
 MAX_SITES          = 8      # Max company sites from search results
@@ -285,8 +285,11 @@ async def crawl_page(crawler: AsyncWebCrawler, url: str) -> tuple[str, str]:
     """
     run_cfg = CrawlerRunConfig(
         cache_mode=CacheMode.BYPASS,
-        page_timeout=20000,
-        wait_until="domcontentloaded",
+        page_timeout=30000,
+        wait_for="js:() => document.readyState === 'complete'",
+        delay_before_return_html=2.5,
+        magic=True,
+        simulate_user=True,
     )
     try:
         result = await crawler.arun(url=url, config=run_cfg)
@@ -407,7 +410,17 @@ async def main() -> None:
 
     browser_cfg = BrowserConfig(
         headless=True,
-        headers=HEADERS,
+        user_agent=(
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/124.0.0.0 Safari/537.36"
+        ),
+        headers={
+            **HEADERS,
+            "Accept-Language": "en-US,en;q=0.9",
+        },
+        viewport_width=1920,
+        viewport_height=1080,
     )
 
     async with AsyncWebCrawler(config=browser_cfg) as crawler:
